@@ -9,4 +9,5 @@ How to run
 run backend with python app.py 
 run frontend with npm run dev
 
-open frontend on port 3001
+open frontend on port 3000
+
