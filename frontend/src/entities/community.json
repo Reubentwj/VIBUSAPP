@@ -1,0 +1,47 @@
+{
+  "name": "Community",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Community name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Community description"
+    },
+    "creator_email": {
+      "type": "string",
+      "description": "Email of community creator"
+    },
+    "cover_image": {
+      "type": "string",
+      "description": "Community cover image URL"
+    },
+    "members_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of members"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private"
+      ],
+      "default": "public",
+      "description": "Community visibility"
+    },
+    "moderators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of moderator emails"
+    }
+  },
+  "required": [
+    "name",
+    "creator_email"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Post",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of user who created the post"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Name of user who created the post"
+    },
+    "user_avatar": {
+      "type": "string",
+      "description": "Avatar URL of user"
+    },
+    "content": {
+      "type": "string",
+      "description": "Text content of the post"
+    },
+    "media_url": {
+      "type": "string",
+      "description": "Photo or video URL"
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "photo",
+        "video",
+        "none"
+      ],
+      "default": "none",
+      "description": "Type of media attached"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "friends",
+        "private"
+      ],
+      "default": "public",
+      "description": "Post visibility"
+    },
+    "community_id": {
+      "type": "string",
+      "description": "Community this post belongs to (if any)"
+    },
+    "likes_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of likes"
+    },
+    "comments_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of comments"
+    }
+  },
+  "required": [
+    "user_email",
+    "content"
+  ]
+}

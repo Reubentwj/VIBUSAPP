@@ -1,0 +1,33 @@
+{
+  "name": "CommunityMembership",
+  "type": "object",
+  "properties": {
+    "community_id": {
+      "type": "string",
+      "description": "ID of the community"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the member"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "member",
+        "moderator",
+        "creator"
+      ],
+      "default": "member",
+      "description": "User's role in the community"
+    },
+    "joined_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date joined"
+    }
+  },
+  "required": [
+    "community_id",
+    "user_email"
+  ]
+}

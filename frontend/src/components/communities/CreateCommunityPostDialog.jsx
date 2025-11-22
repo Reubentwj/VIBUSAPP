@@ -1,0 +1,157 @@
+import React, { useState, useRef } from 'react';
+import { client } from '@/api/client'
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Image as ImageIcon, X, Video } from 'lucide-react';
+
+export default function CreateCommunityPostDialog({ open, onClose, user, community }) {
+  const [content, setContent] = useState('');
+  const [mediaFile, setMediaFile] = useState(null);
+  const [mediaPreview, setMediaPreview] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef(null);
+  const queryClient = useQueryClient();
+
+  const createPostMutation = useMutation({
+    mutationFn: async (postData) => {
+      return await client.entities.Post.create(postData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      queryClient.invalidateQueries({ queryKey: ['communityPosts', community?.id] });
+      handleClose();
+    }
+  });
+
+  const handleClose = () => {
+    setContent('');
+    setMediaFile(null);
+    setMediaPreview(null);
+    onClose();
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setMediaFile(file);
+      setMediaPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!content.trim()) return;
+
+    setIsUploading(true);
+    try {
+      let media_url = null;
+      let media_type = 'none';
+
+      if (mediaFile) {
+        const { file_url } = await client.integrations.Core.UploadFile({ file: mediaFile });
+        media_url = file_url;
+        media_type = mediaFile.type.startsWith('image/') ? 'photo' : 'video';
+      }
+
+      await createPostMutation.mutateAsync({
+        content,
+        community_id: community.id,
+        media_url,
+        media_type,
+        user_email: user.email,
+        user_name: user.full_name || user.email,
+        user_avatar: user.avatar_url,
+        visibility: 'public', // Community posts are always public within the community
+        likes_count: 0,
+        comments_count: 0,
+        created_at: new Date().toISOString(),
+        created_date: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
+    setIsUploading(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Create Post in {community?.name}</DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-4">
+          <Textarea
+            placeholder="Share your thoughts, meals, or fitness journey..."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            rows={4}
+            className="resize-none"
+          />
+
+          {mediaPreview && (
+            <div className="relative rounded-xl overflow-hidden border-2 border-gray-200">
+              {mediaFile?.type.startsWith('image/') ? (
+                <img src={mediaPreview} alt="Preview" className="w-full h-64 object-cover" />
+              ) : (
+                <video src={mediaPreview} controls className="w-full h-64 object-cover" />
+              )}
+              <button
+                onClick={() => {
+                  setMediaFile(null);
+                  setMediaPreview(null);
+                }}
+                className="absolute top-2 right-2 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex-1"
+            >
+              {mediaFile?.type.startsWith('image/') ? (
+                <ImageIcon className="w-4 h-4 mr-2" />
+              ) : (
+                <Video className="w-4 h-4 mr-2" />
+              )}
+              {mediaFile ? 'Change Media' : 'Add Photo/Video'}
+            </Button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+          </div>
+
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={!content.trim() || isUploading}
+              className="bg-gradient-to-r from-emerald-500 to-teal-500"
+            >
+              {isUploading ? 'Posting...' : 'Post'}
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+

@@ -1,0 +1,33 @@
+{
+  "name": "UserChallenge",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User's email"
+    },
+    "challenge_id": {
+      "type": "string",
+      "description": "Challenge ID"
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether challenge was completed"
+    },
+    "progress": {
+      "type": "number",
+      "default": 0,
+      "description": "Current progress"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When challenge was completed"
+    }
+  },
+  "required": [
+    "user_email",
+    "challenge_id"
+  ]
+}

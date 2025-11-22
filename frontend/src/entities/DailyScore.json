@@ -1,0 +1,79 @@
+{
+  "name": "DailyScore",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User's email"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the score"
+    },
+    "total_calories": {
+      "type": "number",
+      "description": "Total calories logged"
+    },
+    "total_protein_g": {
+      "type": "number",
+      "description": "Total protein logged"
+    },
+    "total_carbs_g": {
+      "type": "number",
+      "description": "Total carbs logged"
+    },
+    "total_fats_g": {
+      "type": "number",
+      "description": "Total fats logged"
+    },
+    "calories_target": {
+      "type": "number",
+      "description": "Target calories for this day"
+    },
+    "protein_target": {
+      "type": "number",
+      "description": "Target protein for this day"
+    },
+    "carbs_target": {
+      "type": "number",
+      "description": "Target carbs for this day"
+    },
+    "fats_target": {
+      "type": "number",
+      "description": "Target fats for this day"
+    },
+    "calories_deviation": {
+      "type": "number",
+      "description": "Percentage deviation from calories target"
+    },
+    "protein_deviation": {
+      "type": "number",
+      "description": "Percentage deviation from protein target"
+    },
+    "carbs_deviation": {
+      "type": "number",
+      "description": "Percentage deviation from carbs target"
+    },
+    "fats_deviation": {
+      "type": "number",
+      "description": "Percentage deviation from fats target"
+    },
+    "daily_score": {
+      "type": "number",
+      "description": "Total score for the day (0-100)"
+    },
+    "streak_count": {
+      "type": "number",
+      "description": "Current streak at this day"
+    },
+    "is_within_tolerance": {
+      "type": "boolean",
+      "description": "Whether the day was within \u00b110% tolerance"
+    }
+  },
+  "required": [
+    "user_email",
+    "date"
+  ]
+}

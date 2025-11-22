@@ -1,0 +1,48 @@
+{
+  "name": "DailyChallenge",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Challenge title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Challenge description"
+    },
+    "points": {
+      "type": "number",
+      "description": "Points awarded for completion"
+    },
+    "challenge_type": {
+      "type": "string",
+      "enum": [
+        "logging",
+        "nutrition",
+        "activity",
+        "social"
+      ],
+      "description": "Type of challenge"
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value to achieve"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date this challenge is active"
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a premium challenge"
+    }
+  },
+  "required": [
+    "title",
+    "points",
+    "challenge_type",
+    "date"
+  ]
+}

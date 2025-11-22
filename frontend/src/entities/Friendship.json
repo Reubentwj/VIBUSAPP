@@ -1,0 +1,27 @@
+{
+  "name": "Friendship",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "First user's email"
+    },
+    "friend_email": {
+      "type": "string",
+      "description": "Second user's email"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted"
+      ],
+      "default": "pending",
+      "description": "Friendship status"
+    }
+  },
+  "required": [
+    "user_email",
+    "friend_email"
+  ]
+}

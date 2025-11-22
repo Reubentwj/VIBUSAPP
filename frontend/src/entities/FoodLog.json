@@ -1,0 +1,59 @@
+{
+  "name": "FoodLog",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of user who logged the food"
+    },
+    "food_name": {
+      "type": "string",
+      "description": "Name of the food item"
+    },
+    "calories": {
+      "type": "number",
+      "description": "Calories in the food"
+    },
+    "protein_g": {
+      "type": "number",
+      "description": "Protein in grams"
+    },
+    "carbs_g": {
+      "type": "number",
+      "description": "Carbs in grams"
+    },
+    "fats_g": {
+      "type": "number",
+      "description": "Fats in grams"
+    },
+    "meal_type": {
+      "type": "string",
+      "enum": [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "snack"
+      ],
+      "description": "Type of meal"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Photo of the food"
+    },
+    "log_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the meal"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  },
+  "required": [
+    "user_email",
+    "food_name",
+    "calories",
+    "log_date"
+  ]
+}
